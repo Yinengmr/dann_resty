@@ -13,8 +13,7 @@ local _M = lor:Router()
 
 
 _M:get("", function(req, res, next)
-     ngx.say('hi')
-     res:render('index/index')
+     res:render('index')
 end)
 
 
