@@ -157,5 +157,8 @@ return {
 			},
 	permission_change_key = {
 		key_prefix = "permission-change-"
+	},
+	no_lucky = {
+		'F2846970'
 	}
 }

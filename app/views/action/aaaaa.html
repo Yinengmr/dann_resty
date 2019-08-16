@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../static/libs/iview/3.2.1/css/iview.css">
+    <title>Document</title>
+    <style type="text/css">
+        *{margin:0;padding:0;}
+        body { margin:0; padding:0; font-family:"微软雅黑"; }
+        img{border:0;}
+        a { text-decoration: none; color:#0f3f94;}
+        a:hover { color:#F30; text-decoration:underline;}
+        h1 { background:#ccc; margin:0; padding:20px; }
+        h2 { margin:0; padding:20px 0; }
+        .intro{padding:20px;  line-height:24px;}
+        .demo { padding:20px; border-bottom:#ccc solid 1px;}
+        #footer{margin:15px auto; line-height:24px; text-align:center;color:#999; font-size:12px;padding:12px;}
+        
+        #lottery{width:540px;height:296px;margin:20px 0;background:#74849D;border:1px solid #4A558B;}
+        #lottery li{ float:left; width:100px; height:90px; margin:6px 0 0 6px; display:inline;}
+    </style>
+</head>
+<body>
+<div id="app">
+    <ul id="lottery">
+        <li id="lottery_1"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+        <li id="lottery_2"><img src="../../static/images/j_2.jpg" width="100" height="90" alt="小乖虎公仔" /></li>
+        <li id="lottery_3"><img src="../../static/images/j_3.jpg" width="100" height="90" alt="神秘大礼包" /></li>
+        <li id="lottery_4"><img src="../../static/images/j_5.jpg" width="100" height="90" alt="智能游戏手柄" /></li>
+        <li id="lottery_5"><img src="../../static/images/j_8.jpg" width="100" height="90" alt="小角鹿公仔" /></li>
+    
+        <li id="lottery_9"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    
+        <li id="lottery_8"><img src="../../static/images/j_4.jpg" width="100" height="90" alt="" /></li>
+        <li><a href="javascript:void(0);" @click="start_lottery()"><img src="../static/images/j_but.jpg" width="100" height="90" alt="开始抽奖" /></a></li>
+    
+        <li id="lottery_7"><img src="../../static/images/j_6.jpg" width="100" height="90" alt="游戏耳机" /></li>
+        <li id="lottery_6"><img src="../../static/images/j_7.jpg" width="100" height="90" alt="豆蛙抱枕" /></li>
+    
+        <li id="lottery_10"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    
+        <li id="lottery_11"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+        <li id="lottery_12"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+        <li id="lottery_13"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+        <li id="lottery_14"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    </ul>
+</div>
+</body>
+</html>
+<script src='../../static/libs/iview/3.2.1/js/vue.js'></script>
+<script src='../../static/libs/iview/3.2.1/js/iview.min.js'></script>
+<script src="../../static/js/jquery.js"></script>
+<script src='../../static/libs/axios/axios-0.18.0.min.js'></script>
+
+<script>
+var APP= APP || {};
+window.onload = function () {
+   // 模塊初始化；
+   APP.server.init();
+};
+(function (KK) {
+    var _this = null;
+    KK.server = KK.server || {};
+    _this = KK.server = {
+        Main: {
+            data:function() {
+                return {
+                    //定义参数
+                    index: 1,              //当前选中对象的位置
+                    fast:'',                   //在哪个位置开始加速
+                    num: 14,              //共有多少个抽奖对象
+                    cycle:'',                  //转动多少圈
+                    speed: 300,            //开始时速度
+                    flag : false,          //正在抽奖标志
+                    lucky:'',                  //中奖号码，实际应用由后台产生
+                    award:'',                  //奖品名称
+                    lottery:''             //抽奖对象
+                }
+            },
+            methods: {
+                //产生随机数
+                rand(Min,Max){
+                    var Range = Max - Min;
+                    var Rand = Math.random();
+                    return(Min + Math.round(Rand * Range));
+                },
+                //开始抽奖
+                start_lottery(){
+                    console.log('开始抽奖')
+                    return false;
+                    let root = this;
+                    if(root.flag){
+                        //alert('正在抽奖，请等待抽奖结果！');
+                        //return false;
+                        return void(0);
+                    }
+                    root.flag=true;
+                    root.index = 1;              //当前选中对象的位置
+                    root.fast  = root.rand(3,6);      //在哪个位置开始加速
+                    root.cycle = root.rand(3,5);      //转动多少圈
+                    root.speed = 300;            //开始时速度
+
+                    root.lucky = 3;    //中奖号码
+                    root.award = 1111;  //奖品名称
+                    root.show_lottery();
+                },
+                //抽奖效果展示
+                show_lottery(){
+                    let root = this
+                    let index = root.index
+                    if(root.index>root.num){
+                        root.index = 1;
+                        root.cycle--;
+                    }
+                    $('#lottery li').css('opacity',0.3);
+                    $('#lottery_'+root.index).css('opacity',1);
+                    if(root.index>root.fast) root.speed=100;//开始加速
+                    if(root.cycle==0 && root.lucky-root.index<rand(2,5)){
+                        root.speed=speed+200;//开始减速
+                    } 
+
+                    if(root.cycle<=0 && root.index==root.lucky){//结束抽奖，选中号码
+                        clearTimeout(root.lottery);
+                        setTimeout(function(){
+                            $('#lottery li').css('opacity',1);
+                            alert('恭喜您获得：'+award);
+                        },1200);
+                        flag = false;
+                    }else{
+                        root.lottery = setTimeout(root.show_lottery(),root.speed);
+                    }
+                    root.index++;
+                }
+            },
+            created: function () {
+                console.log(123)
+                this.start_lottery();
+            }
+        },
+        init: function () {
+            console.log(456)
+            var Component = Vue.extend(_this.Main);
+            new Component().mount('#app');
+        },
+    }
+}(APP))
+</script>

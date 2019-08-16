@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../static/libs/iview/3.2.1/css/iview.css">
+    <style type="text/css">
+        *{margin:0;padding:0;}
+        body { margin:0; padding:0; font-family:"微软雅黑"; }
+        img{border:0;}
+        a { text-decoration: none; color:#fce2ae;}
+        a:hover { color:#F30; text-decoration:underline;}
+        h1 { background:#ccc; margin:0; padding:20px; }
+        h2 { margin:0; padding:20px 0; }
+        .intro{padding:20px;  line-height:24px;}
+        .demo { padding:20px; border-bottom:#ccc solid 1px;}
+        #footer{margin:15px auto; line-height:24px; text-align:center;color:#999; font-size:12px;padding:12px;}
+        
+        #lottery{width:654px;height:654px;margin:20px auto;background:#a0cc78;border:1px solid #4A558B;}
+        #lottery li{ float:left; width:120px; height:120px; margin:5px; display:inline;}
+
+.shaky {
+    display: inline-block;
+    padding: 1px;
+    /* font-size: 12px; */
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-animation-name: shaky-slow;
+    -ms-animation-name: shaky-slow;
+    animation-name: shaky-slow;
+    -webkit-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    /* animation-iteration-count: infinite; */
+    animation-iteration-count: 1; /* 1次 */
+    -webkit-animation-timing-function: 1s;
+    -ms-animation-timing-function:1s;
+    animation-timing-function: 1s;
+    -webkit-animation-delay: 0s;
+    -ms-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-play-state: running;
+    -ms-animation-play-state: running;
+    animation-play-state: running;
+}
+@-webkit-keyframes shaky-slow {
+    0% {
+        -webkit-transform: translate(0px, 0px) rotate(0deg);
+    }
+    10% {
+        -webkit-transform: translate(0px, -2px) rotate(0deg);
+    }
+    15% {
+        -webkit-transform: translate(-4px, -2px) rotate(0deg);
+    }
+    20% {
+        -webkit-transform: translate(0px, 2px) rotate(0deg);
+    }
+    30% {
+        -webkit-transform: translate(0px, -2px) rotate(0deg);
+    }
+    40% {
+        -webkit-transform: translate(0px, 2px) rotate(0deg);
+    }
+    45% {
+        -webkit-transform: translate(24px, 2px) rotate(0deg);
+    }
+    50% {
+        -webkit-transform: translate(0px, 0px) rotate(0deg);
+    }
+    85% {
+        font-size: 50px
+    }
+    95% {
+        font-size: 80px
+    }
+}
+@keyframes shaky-slow {
+    0% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+    10% {
+        transform: translate(0px, 2px) rotate(0deg);
+    }
+    15% {
+        transform: translate(4px, 2px) rotate(0deg);
+    }
+    20% {
+        transform: translate(0px, -2px) rotate(0deg);
+    }
+    30% {
+        transform: translate(0px, 2px) rotate(0deg);
+    }
+    40% {
+        transform: translate(0px, -2px) rotate(0deg);
+    }
+    45% {
+        transform: translate(-4px, -2px) rotate(0deg);
+    }
+    50% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+    85% {
+        font-size: 50px
+    }
+    95% {
+        font-size: 80px
+    }
+}
+
+    </style>
+    <title>抽奖</title>
+</head>
+{-raw-}
+<body style="padding:15px;">
+  <div id="app">
+      <div style="width:530px;margin:0px auto;display: block">
+            <i-button @click="get_emp_all();">刷新</i-button>
+            
+            <i-button style="float: right" type="info"  @click="start_lottery()">抽奖</i-button>
+      </div>
+    
+<!--     <ul id="lottery">
+        <li id="lottery_1"><img src="../../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    </ul> -->
+    <ul id="lottery">
+        <li :id="'lottery_'+(Number(i)+1)" v-for="item,i in emp_all">
+            <div v-if="!item.no" style="margin-top: 5px">
+                    <a href="javascript:void(0);" @click="start_lottery()">
+                        <img src="../static/images/j_but.jpg" width="100" height="90" alt="开始抽奖" /></a>
+            </div>
+            <div v-else style="color:#b6ffea;font-size: 28px;background-color: #226b80;
+            text-align:center;line-height: 120px;">
+                    <!-- <img :src="'../../static/images/j_'+(Number(i)+1)+'.jpg'" width="100" height="90" alt="悟空公仔" /> -->
+                    {{item.name}}
+            </div>
+        </li>
+    </ul>
+<div style="width:1000px;height:100px;margin:0 auto;text-align:center">
+    <span style="font-size: 60px;color:rgb(211, 129, 7)" :class="{shaky:class_true}">
+        {{ message }}
+    </span>
+</div>
+  </div>
+</body>
+{-raw-}
+</html>
+<script src="../../static/libs/iview/3.2.1/js/vue.js"></script>
+<script src="../../static/libs/iview/3.2.1/js/iview.min.js"></script>
+<script src="../../static/js/jquery.js"></script>
+<script src='../../static/libs/axios/axios-0.18.0.min.js'></script>
+<script>
+var APP = APP || {}
+window.onload = function(){
+    // 模塊初始化；
+    APP.line_emp.init();
+}
+(function(KK) {
+    var _this = null;
+    KK.line_emp = KK.line_emp || {};
+    _this = KK.line_emp = {
+        Main: {
+            data:function(){
+                return {
+                    //定义参数
+                    index: 1,                       //当前选中对象的位置
+                    fast:'',                        //在哪个位置开始加速
+                    num: 15,                        //共有多少个抽奖对象
+                    cycle:'',                       //转动多少圈
+                    speed: 300,                     //开始时速度
+                    flag : false,                   //正在抽奖标志
+                    lucky:'',                       //中签号码
+                    emp_name:'',                    //中签人名
+                    message:'',                     // 公告、信息
+                    emp_no:'',                      //中签工号
+                    lottery:'',                     //抽签
+                    emp_all:[],                      // 所有人员
+                    class_true:false
+                }
+            },
+            methods:{
+                //产生随机数
+                rand(Min,Max){
+                    var Range = Max - Min;
+                    var Rand = Math.random();
+                    return(Min + Math.round(Rand * Range));
+                },
+                //开始抽奖
+                start_lottery(){
+                    console.log('开始抽奖')
+                    // return false;
+                    let root = this;
+                    if(root.flag){
+                        alert('正在抽奖，请等待抽奖结果！');
+                        //return false;
+                        return false;
+                    }
+                    root.flag=true;
+                    root.index = root.rand(1,20);              //当前选中对象的位置
+                    root.fast  = root.rand(1,20);      //在哪个位置开始加速
+                    root.cycle = root.rand(1,2);      //转动多少圈
+                    root.speed = 300;            //开始时速度
+
+                    // 前端抽签 
+                    // root.lucky = Math.floor(Math.random()*15+1)    //中奖号码
+                    // root.emp_name = root.emp_all[root.lucky-1].name;
+                    // root.emp_no = root.emp_all[root.lucky-1].no;
+
+                    // 后端抽签
+                    root.post_ajax('/action',{},function(res){
+                        console.log(res)
+                        root.lucky = res.lucky.no
+                        root.emp_name = res.lucky.name
+                        root.emp_no = res.lucky.emp_no
+                    })
+                    root.class_true=false;
+                    // 若果中签工号连续中签，则跳过，继续抽签
+                    root.show_lottery();
+                },
+                //抽奖效果展示
+                show_lottery(){
+                    let root = this
+                    if(root.index>root.num){
+                        root.index = 1;
+                        root.cycle--;
+                    }
+                    $('#lottery li').css('opacity',0.3);
+                    $('#lottery_'+root.index).css('opacity',1);
+                    // $('#lottery_8').css('opacity',1);
+                    if(root.index>root.fast){
+                        root.speed=100;//开始加速
+                    } 
+                    if(root.cycle==0 && root.lucky-root.index<root.rand(2,5)){
+                        root.speed=root.speed+200;//开始减速
+                    } 
+                    console.log(root.cycle)
+                    if(root.cycle<=0 && root.index==root.lucky){//结束抽奖，选中号码
+                        clearTimeout(root.lottery);
+                        root.message = '恭喜：'+root.emp_name+' 中签'
+                        root.class_true=true;
+
+                        setTimeout(function(){
+                            $('#lottery li').css('opacity',1);
+                            root.class_true=false;
+                        },1200);
+                        root.flag = false;
+                    }else{
+                        root.flag = true;
+                        root.lottery = setTimeout(
+                            function(){
+                                root.show_lottery()
+                            },root.speed
+                        );
+                    }
+                    root.index++
+                },
+                // 请求参与抽奖的人员
+                get_emp_all(){
+                    let root = this;
+                    let url = '/action/emp'
+                    root.get_ajax(url,function(res){
+                        console.log(res.data)
+                        root.emp_all = res.data.data
+                        root.num = root.emp_all.length+1
+                    })
+                },
+                get_ajax(url,callback){
+                    let root =this;
+                    axios.get(url)
+                    .then(function(res){
+                        if(res.data.rv !=200){
+                            root.Message.warning(res.data.msg)
+                            // setTimeout(()=>{
+                            //     common_js.redirect_login(res.data.rv);
+                            // },2000)
+                            return false;
+                        }
+                        callback(res)
+                    })
+                    .catch(function(err){
+                        root.Message.error('系统错误！');
+                        callback(err)
+                    })
+                },
+                /*公用的ajax post*/
+                post_ajax(url,data,callback){
+                    let root =this;
+                    axios.post(url,data)
+                    .then(function(res){
+                        if(res.data.rv !=200){
+                            root.Message.warning(res.data.msg)
+                            return false;
+                        }
+                        callback(res.data)
+                    })
+                    .catch(function(err){
+                         callback(err)
+                    })
+                },
+            },
+            created: function () {
+                console.log('aa')
+                this.get_emp_all();
+            }
+        },
+        init: function() {
+            var Component = Vue.extend(_this.Main);
+            new Component().$mount('#app');
+        },
+    }
+}(APP))
+</script>

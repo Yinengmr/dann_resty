@@ -1,16 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jquery+PHP走马灯抽奖效果示例源码</title>
+<style type="text/css">
+*{margin:0;padding:0;}
+body { margin:0; padding:0; font-family:"微软雅黑"; }
+img{border:0;}
+a { text-decoration: none; color:#0f3f94;}
+a:hover { color:#F30; text-decoration:underline;}
+h1 { background:#ccc; margin:0; padding:20px; }
+h2 { margin:0; padding:20px 0; }
+.intro{padding:20px;  line-height:24px;}
+.demo { padding:20px; border-bottom:#ccc solid 1px;}
+#footer{margin:15px auto; line-height:24px; text-align:center;color:#999; font-size:12px;padding:12px;}
+
+#lottery{width:580px;height:296px;margin:20px 0;background:#74849D;border:1px solid #4A558B;}
+#lottery li{ float:left; width:100px; height:90px; margin:6px 0 0 6px; display:inline;}
+</style>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/lottery.js"></script>
 </head>
+
 <body>
-{-raw-}
+<h1><center>Jquery+PHP走马灯抽奖效果示例源码</center></h1>
+<div class="intro">
+此走马灯抽奖效果使用纯JS制作，兼容IE、火狐、谷歌等浏览器，效果表现好，定制自由度高，值得推荐。<br />
+附示例源代码打包下载。
+</div>
+<div class="demo">
+  <h2>效果演示：</h2>
+  <ul id="lottery">
+    <li id="lottery_1"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    <li id="lottery_2"><img src="../static/images/j_2.jpg" width="100" height="90" alt="小乖虎公仔" /></li>
+    <li id="lottery_3"><img src="../static/images/j_3.jpg" width="100" height="90" alt="神秘大礼包" /></li>
+    <li id="lottery_4"><img src="../static/images/j_5.jpg" width="100" height="90" alt="智能游戏手柄" /></li>
+    <li id="lottery_5"><img src="../static/images/j_8.jpg" width="100" height="90" alt="小角鹿公仔" /></li>
 
-    <h1>openresty</h1>
-{-raw-}
+    <li id="lottery_9"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
 
+    <li id="lottery_8"><img src="../static/images/j_4.jpg" width="100" height="90" alt="" /></li>
+    <li><a href="javascript:void(0);" onclick="start_lottery();"><img src="../static/images/j_but.jpg" width="100" height="90" alt="开始抽奖" /></a></li>
+
+    <li id="lottery_7"><img src="../static/images/j_6.jpg" width="100" height="90" alt="游戏耳机" /></li>
+    <li id="lottery_6"><img src="../static/images/j_7.jpg" width="100" height="90" alt="豆蛙抱枕" /></li>
+
+    <li id="lottery_10"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+
+    <li id="lottery_11"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    <li id="lottery_12"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    <li id="lottery_13"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+    <li id="lottery_14"><img src="../static/images/j_1.jpg" width="100" height="90" alt="悟空公仔" /></li>
+  </ul>
+</div>
+<div class="demo">
+<h2>注意事项</h2>
+1.暂时没想到。有问题，请给我留言吧。<a href="http://www.thinkcart.net/jquery-lottery-marquee-190.html" target="_blank">点击给我留言</a><br /><br />
+2.不喜欢走马灯？那试试<a target="_blank" href="http://www.thinkcart.net/share/lottery/" title="Jquery+Flash抽奖转盘源码模板v1.0">转盘</a>或<a target="_blank" href="http://www.thinkcart.net/share/egg/" title="Jquery+Flash砸金蛋抽奖源码模板v1.0">砸金蛋</a>或<a target="_blank" href="http://www.thinkcart.net/share/slot/" title="Jquery+Flash老虎机抽奖源码模板v1.0">老虎机</a>或<a target="_blank" href="http://www.thinkcart.net/share/box/" title="">捞宝箱</a>或<a target="_blank" href="http://www.thinkcart.net/share/lottery-card/" title="Jquery+Flash翻牌抽奖效果示例源码">翻牌</a>吧！
+<br /><br />
+</div>
+<div id="footer">
+<a href="http://www.thinkcart.net/">thinkphp学习博客</a>- 记录工作，生活，学习的点点滴滴！<br />
+<a href="http://www.diahosting.com/client/aff.php?aff=1979">美国VPS</a>- 感谢提供服务器！<br />
+</div>
 </body>
 </html>
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/lotter.js"></script>
