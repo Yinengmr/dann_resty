@@ -6,5 +6,6 @@ return {
     -- 抽签程序
     action = {
         { uri = "/action",    router = "app.routes.action"},  
+        { uri = "/nike",    router = "app.routes.nike"},  
     }
 }

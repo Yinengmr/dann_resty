@@ -13,7 +13,8 @@ local _M = lor:Router()
 
 
 _M:get("", function(req, res, next)
-     res:render('index')
+     return ngx.say('<h2><a href="/action">抽签</a></h2>')
+     -- res:render('index')
 end)
 
 
