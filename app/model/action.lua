@@ -24,6 +24,7 @@ function action:his_chouqian(limit)
     local sql = [[
         SELECT *
         FROM danny_chouqian_his
+        order by id desc
     ]]
     if limit then
         sql = sql..[[ LIMIT 4 ]]

@@ -160,6 +160,10 @@ local function get_lucky(data)
     local no = range()
     -- 略过最近的4人
     local pass = action_model:his_chouqian(true)
+    -- table.insert(pass,{
+    --     emp_name = '刘雪梅'
+    --     emp_no='lxm'
+    -- })
     local is_pass = false
     for k=1,#pass  do
         if data[no].no== pass[k].emp_no then
@@ -209,7 +213,7 @@ _M:post('',function(req,res,next)
 end)
 
 _M:get('/his',function(req,res,next)
-    local resp,err = action_model:his_chouqian(true)
+    local resp,err = action_model:his_chouqian(false)
     if not err and resp then
         return res:json{
             rv = 200,
