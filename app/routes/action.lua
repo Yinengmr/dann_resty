@@ -4,8 +4,9 @@ local cjson = require("cjson")
 local utils = require("app.libs.utils")
 
 
-local config = ngx.shared.config:get("config") 
-
+-- local config  = require("app.config.".. ngx.shared.config:get("config"))
+local config  = require("app.config.config-local")
+local action_model = require("app.model.action")
 local lor = require("lor.index")
 local _M = lor:Router()
 
@@ -157,16 +158,15 @@ end)
 -- 获取号码
 local function get_lucky(data)
     local no = range()
-    -- for i=1,#config.no_lucky do
-    --     if data[no].no == config.no_lucky[i] then
-    --         get_lucky()
-    --     end
-    -- end
-    if data[no].no=='F2846970' 
-    or data[no].no=='F2845879' 
-    or data[no].no=='F2847582' 
-    or data[no].no=='F2847550' 
-    or not data[no].no then
+    -- 略过最近的4人
+    local pass = action_model:his_chouqian(true)
+    local is_pass = false
+    for k=1,#pass  do
+        if data[no].no== pass[k].emp_no then
+            is_pass = true
+        end
+    end
+    if is_pass then
         get_lucky()
     end
     return no
@@ -174,10 +174,19 @@ end
 
 -- 抽签接口
 _M:post('',function(req,res,next)
-    local data = req.session.get("all_user")
+    local data = req.session.get("all_user") or {}
+    if #data < 1 then
+        return res:json{
+            rv = 501,
+            data = #data,
+            msg = 'session 已过期，请刷新页面！'
+        }
+    end
+
     local no = get_lucky(data)
 
     local lucky_his = req.session.get("lucky_his") or {}
+
     table.insert(lucky_his,{
         name = data[no].name,
         no   = data[no].order_item,
@@ -185,7 +194,9 @@ _M:post('',function(req,res,next)
         time = #lucky_his+1
     })
     req.session.set("lucky_his",lucky_his)
-    
+    -- 写入抽签历史
+    -- ngx.timer.at(2,action_model:insert_chouqian_his(data[no].name,data[no].no,'1'))
+    local resp,err = action_model:insert_chouqian_his(data[no].name,data[no].no,'1')
     return res:json{
         rv = 200,
         lucky = {
@@ -195,5 +206,16 @@ _M:post('',function(req,res,next)
             lucky_his = lucky_his
         }
     }
+end)
+
+_M:get('/his',function(req,res,next)
+    local resp,err = action_model:his_chouqian(true)
+    if not err and resp then
+        return res:json{
+            rv = 200,
+            count = #resp,
+            data = resp
+        }
+    end
 end)
 return _M
