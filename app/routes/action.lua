@@ -159,10 +159,27 @@ end)
 local function get_lucky(data)
     local no = range()
     -- 略过最近的4人
-    local pass = action_model:his_chouqian(true)
+    local resp,err = action_model:his_chouqian(true)
+    local pass = resp or {}
+    table.insert(pass,{
+        emp_name = '刘雪梅',
+        emp_no='lxm'
+    })
+    table.insert(pass,{
+        emp_name = '郭子佩',
+        emp_no='F2847588'
+    })
+    table.insert(pass,{
+        emp_name = '杨康',
+        emp_no='F2845879'
+    })
     -- table.insert(pass,{
-    --     emp_name = '刘雪梅'
-    --     emp_no='lxm'
+    --     emp_name = 'Maxine',
+    --     emp_no='Maxine Lee'
+    -- })
+    -- table.insert(pass,{
+    --     emp_name = 'J.malminds',
+    --     emp_no='j'
     -- })
     local is_pass = false
     for k=1,#pass  do

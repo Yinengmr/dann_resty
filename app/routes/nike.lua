@@ -6,7 +6,7 @@ local utils = require("app.libs.utils")
 
 local config = ngx.shared.config:get("config") 
 local http = require("resty.http")
-local zlib = require "zlib"
+-- local zlib = require "zlib"
 
 local lor = require("lor.index")
 local _M = lor:Router()
