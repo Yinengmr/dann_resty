@@ -218,7 +218,7 @@ _M:post('',function(req,res,next)
     req.session.set("lucky_his",lucky_his)
     -- 写入抽签历史
     -- ngx.timer.at(2,action_model:insert_chouqian_his(data[no].name,data[no].no,type))
-    if not utils.chk_is_null(type) and type ~=0 then
+    if not utils.chk_is_null(type) and tonumber(type) ~=0 then
         local resp,err = action_model:insert_chouqian_his(data[no].name,data[no].no,type)
     end
     return res:json{
