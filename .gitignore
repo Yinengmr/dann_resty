@@ -1,0 +1,6 @@
+logs/
+fastcgi_temp/
+proxy_temp/
+scgi_temp/
+tmp/
+uwsgi_temp/
