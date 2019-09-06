@@ -138,9 +138,14 @@
     <div style="float:left;width:654px;height:654px;margin-left:40px;">
         <div style="width:530px;margin:0px auto;">
             <el-button @click="get_emp_all();" type="info" round plain>刷新</el-button>
-
-            <el-button style="float: right" type="primary"  @click="start_lottery()" round plain>抽奖</el-button>
             
+            <el-button style="float: right" type="primary"  @click="start_lottery()" round plain>抽奖</el-button>
+            <el-radio-group v-model="radio_model" style="float: right;padding: 15px;">
+                <el-radio :label="1">专题演讲</el-radio>
+                <el-tooltip class="item" effect="dark" content="用于测试，不记录抽签历史" placement="top">
+                    <el-radio :label="0">其他</el-radio>
+                </el-tooltip>
+            </el-radio-group>
       </div>
       <div style="padding: 15px 0;font-size: 28px;width:200px;margin-left: 80px;">
         <span><b>抽签历史</b></span>
@@ -218,6 +223,9 @@ window.onload = function(){
                     drawer: false,
                     direction: 'rtl',
                     chouqian_his:[],
+
+                    // 抽签类型
+                    radio_model:1
                 }
             },
             methods:{
@@ -276,14 +284,9 @@ window.onload = function(){
                     root.cycle = root.rand(1,2);      //转动多少圈
                     root.speed = 300;            //开始时速度
                     // 后端抽签
-                    root.post_ajax('/action',{},function(res){
-                        if(res.rv==501){
-                            root.$Message.error(res.msg);
-                            root.flag=false;
-                            return false;
-                        }
+                    root.post_ajax('/action?type='+root.radio_model,{},function(res){
                         if(res.rv!=200){
-                            root.$Message.info('请刷新！');
+                            root.$Message.info(res.msg);
                             root.flag=false;
                             return false;
                         }
@@ -373,10 +376,9 @@ window.onload = function(){
                     let root =this;
                     axios.post(url,data)
                     .then(function(res){
-                        if(res.data.rv !=200){
-                            root.Message.warning(res.data.msg)
-                            return false;
-                        }
+                        // if(res.data.rv !=200){
+                        //     root.$Message.warning(res.data.msg)
+                        // }
                         callback(res.data)
                     })
                     .catch(function(err){

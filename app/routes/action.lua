@@ -103,8 +103,8 @@ local emp = {
         name = '杨帆',
     },
     {
-        no = 'lxm',
-        name = '刘雪梅',
+        no = 'Ann',
+        name = '宋沫盈',
     },
     {
         no = 'j',
@@ -162,12 +162,12 @@ local function get_lucky(data)
     local resp,err = action_model:his_chouqian(true)
     local pass = resp or {}
     table.insert(pass,{
-        emp_name = '刘雪梅',
-        emp_no='lxm'
+        emp_name = '宋沫盈',
+        emp_no='Ann'
     })
     table.insert(pass,{
-        emp_name = '郭子佩',
-        emp_no='F2847588'
+        emp_name = '程义能',
+        emp_no='F2846970'
     })
     table.insert(pass,{
         emp_name = '杨康',
@@ -188,13 +188,14 @@ local function get_lucky(data)
         end
     end
     if is_pass then
-        get_lucky()
+        get_lucky(data)
     end
     return no
 end
 
 -- 抽签接口
 _M:post('',function(req,res,next)
+    local type = req.query.type
     local data = req.session.get("all_user") or {}
     if #data < 1 then
         return res:json{
@@ -216,15 +217,18 @@ _M:post('',function(req,res,next)
     })
     req.session.set("lucky_his",lucky_his)
     -- 写入抽签历史
-    -- ngx.timer.at(2,action_model:insert_chouqian_his(data[no].name,data[no].no,'1'))
-    local resp,err = action_model:insert_chouqian_his(data[no].name,data[no].no,'1')
+    -- ngx.timer.at(2,action_model:insert_chouqian_his(data[no].name,data[no].no,type))
+    if not utils.chk_is_null(type) and type ~=0 then
+        local resp,err = action_model:insert_chouqian_his(data[no].name,data[no].no,type)
+    end
     return res:json{
         rv = 200,
         lucky = {
             name = data[no].name,
             no   = data[no].order_item,
             emp_no  = data[no].no,
-            lucky_his = lucky_his
+            lucky_his = lucky_his,
+            type = type
         }
     }
 end)
