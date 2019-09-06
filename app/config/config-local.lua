@@ -58,11 +58,11 @@ return {
 	mysql = {
 		timeout = 120000,
 		connect_config = {
-			host = "10.132.241.219",
+			host = "223.255.255.134",
 	        port = 3306,
 	        database = "sf_devel",
-	        user = "tom",
-	        password = "Xx12`12`1`",
+	        user = "test",
+	        password = "test",
 	        max_packet_size = 1024 * 1024
 		},
 		pool_config = {
