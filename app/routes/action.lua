@@ -116,11 +116,6 @@ local emp = {
     },
 }
 
--- 产生随机数
-local function range()
-    local no = math.random(1,MAX_NUM_USER)
-    return no
-end
 
 -- 抽签页面
 _M:get("", function(req, res, next)
@@ -156,39 +151,19 @@ _M:get('/emp',function(req, res, next)
 end)
 
 -- 获取号码
-local function get_lucky(data)
-    local no = range()
-    -- 略过最近的4人
-    local resp,err = action_model:his_chouqian(true)
-    local pass = resp or {}
-    table.insert(pass,{
-        emp_name = '宋沫盈',
-        emp_no='Ann'
-    })
-    table.insert(pass,{
-        emp_name = '程义能',
-        emp_no='F2846970'
-    })
-    table.insert(pass,{
-        emp_name = '杨康',
-        emp_no='F2845879'
-    })
-    -- table.insert(pass,{
-    --     emp_name = 'Maxine',
-    --     emp_no='Maxine Lee'
-    -- })
-    -- table.insert(pass,{
-    --     emp_name = 'J.malminds',
-    --     emp_no='j'
-    -- })
+local function get_lucky(data,pass)
+    local no = math.random(1,MAX_NUM_USER)
+
     local is_pass = false
     for k=1,#pass  do
         if data[no].no== pass[k].emp_no then
+            ngx.log(ngx.DEBUG,'==================',data[no].no)
             is_pass = true
+            break
         end
     end
     if is_pass then
-        get_lucky(data)
+        get_lucky(data,pass)
     end
     return no
 end
@@ -205,17 +180,41 @@ _M:post('',function(req,res,next)
         }
     end
 
-    local no = get_lucky(data)
+    -- 略过最近的4人
+    local resp,err = action_model:his_chouqian(true)
+    local pass = resp or {}
+    table.insert(pass,{
+        emp_name = '宋沫盈',
+        emp_no='Ann'
+    })
+    table.insert(pass,{
+        emp_name = '程义能',
+        emp_no='F2846970'
+    })
+    table.insert(pass,{
+        emp_name = '杨康',
+        emp_no='F2845879'
+    })
+    table.insert(pass,{
+        emp_name = 'Maxine',
+        emp_no='Maxine Lee'
+    })
+    table.insert(pass,{
+        emp_name = 'J.malminds',
+        emp_no='j'
+    })
+    
+    local no = get_lucky(data,pass)
 
     local lucky_his = req.session.get("lucky_his") or {}
 
-    table.insert(lucky_his,{
-        name = data[no].name,
-        no   = data[no].order_item,
-        emp_no  = data[no].no,
-        time = #lucky_his+1
-    })
-    req.session.set("lucky_his",lucky_his)
+    -- table.insert(lucky_his,{
+    --     name = data[no].name,
+    --     no   = data[no].order_item,
+    --     emp_no  = data[no].no,
+    --     time = #lucky_his+1
+    -- })
+    -- req.session.set("lucky_his",lucky_his)
     -- 写入抽签历史
     -- ngx.timer.at(2,action_model:insert_chouqian_his(data[no].name,data[no].no,type))
     if not utils.chk_is_null(type) and tonumber(type) ~=0 then
@@ -227,7 +226,7 @@ _M:post('',function(req,res,next)
             name = data[no].name,
             no   = data[no].order_item,
             emp_no  = data[no].no,
-            lucky_his = lucky_his,
+            -- lucky_his = lucky_his,
             type = type
         }
     }

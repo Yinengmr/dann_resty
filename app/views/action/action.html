@@ -141,7 +141,9 @@
             
             <el-button style="float: right" type="primary"  @click="start_lottery()" round plain>抽奖</el-button>
             <el-radio-group v-model="radio_model" style="float: right;padding: 15px;">
-                <el-radio :label="1">专题演讲</el-radio>
+                <el-tooltip class="item" effect="dark" content="最近中签的4人，不会被抽中" placement="top">
+                    <el-radio :label="1">专题演讲</el-radio>
+                </el-tooltip>
                 <el-tooltip class="item" effect="dark" content="用于测试，不记录抽签历史" placement="top">
                     <el-radio :label="0">其他</el-radio>
                 </el-tooltip>
