@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="../../static/libs/element_ui/2.12.0/index.css">
     <link rel="stylesheet" href="../../static/libs/iview/3.2.1/css/iview.css">
     <style type="text/css">
+        [v-cloak] {
+            display: none !important;
+        }
         *{margin:0;padding:0;}
         body { margin:0; padding:0; font-family:"微软雅黑"; }
         img{border:0;}
@@ -118,7 +121,7 @@
 </head>
 {-raw-}
 <body style="padding:30px;">
-  <div id="app">
+  <div id="app" v-cloak>
       
     <div style="float:left;width:654px;height:654px;margin-left:40px;">
         <ul id="lottery">
