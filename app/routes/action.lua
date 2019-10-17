@@ -154,6 +154,10 @@ end)
 local function get_lucky(data,pass)
     local no = math.random(1,MAX_NUM_USER)
 
+    if #pass ==0 then
+        return no
+    end
+    
     local is_pass = false
     for k=1,#pass  do
         if data[no].no== pass[k].emp_no then
