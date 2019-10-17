@@ -200,11 +200,10 @@ _M:post('',function(req,res,next)
         emp_name = 'J.malminds',
         emp_no='j'
     })
-    -- if not utils.chk_is_null(type) and tonumber(type) ~=0 then
-    --     local no = get_lucky(data,pass)
-    -- else
-    --     local no = get_lucky(data,{})
-    -- end
+    
+    if not utils.chk_is_null(type) and tonumber(type) ==0 then
+        pass = {}
+    end
     
     local no = get_lucky(data,pass)
 
