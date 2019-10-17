@@ -154,10 +154,10 @@ end)
 local function get_lucky(data,pass)
     local no = math.random(1,MAX_NUM_USER)
 
-    if #pass ==0 then
+    if #pass == 0 then
         return no
     end
-    
+
     local is_pass = false
     for k=1,#pass  do
         if data[no].no== pass[k].emp_no then
@@ -200,12 +200,13 @@ _M:post('',function(req,res,next)
         emp_name = 'J.malminds',
         emp_no='j'
     })
-    if not utils.chk_is_null(type) and tonumber(type) ~=0 then
-        local no = get_lucky(data,pass)
-    else
-        local no = get_lucky(data,{})
-    end
+    -- if not utils.chk_is_null(type) and tonumber(type) ~=0 then
+    --     local no = get_lucky(data,pass)
+    -- else
+    --     local no = get_lucky(data,{})
+    -- end
     
+    local no = get_lucky(data,pass)
 
     local lucky_his = req.session.get("lucky_his") or {}
 
