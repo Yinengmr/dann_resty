@@ -183,17 +183,10 @@ _M:post('',function(req,res,next)
     -- 略过最近的4人
     local resp,err = action_model:his_chouqian(true)
     local pass = resp or {}
-    table.insert(pass,{
-        emp_name = '宋沫盈',
-        emp_no='Ann'
-    })
+
     table.insert(pass,{
         emp_name = '程义能',
         emp_no='F2846970'
-    })
-    table.insert(pass,{
-        emp_name = '杨康',
-        emp_no='F2845879'
     })
     table.insert(pass,{
         emp_name = 'Maxine',
