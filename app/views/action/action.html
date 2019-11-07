@@ -140,7 +140,7 @@
     </div>
     <div style="float:left;width:654px;height:654px;margin-left:40px;">
         <div style="width:530px;margin:0px auto;">
-            <el-button @click="get_emp_all();" type="info" :loading="geting" round plain>{{geting?'刷新中':'刷新'}}</el-button>
+            <el-button @click="get_emp_all();" type="info" :loading="geting" :disabled="flag" round plain>{{geting?'刷新中':'刷新'}}</el-button>
             
             <el-button style="float: right" type="primary"  @click="start_lottery()" :loading="flag" round plain>{{flag?'抽奖中':'抽奖'}}</el-button>
             <el-radio-group v-model="radio_model" style="float: right;padding: 15px;">
@@ -349,11 +349,12 @@ window.onload = function(){
                 // 请求参与抽奖的人员
                 get_emp_all(){
                     let root = this;
-                    root.geting = true;
+                    
                     if(root.flag){
                         alert('正在抽奖，请等待抽奖结果！');
                         return false;
                     }
+                    root.geting = true;
                     root.message = ''
                     let url = '/action/emp'
                     root.get_ajax(url,function(res){
