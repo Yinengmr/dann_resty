@@ -140,9 +140,9 @@
     </div>
     <div style="float:left;width:654px;height:654px;margin-left:40px;">
         <div style="width:530px;margin:0px auto;">
-            <el-button @click="get_emp_all();" type="info" round plain>刷新</el-button>
+            <el-button @click="get_emp_all();" type="info" :loading="geting" round plain>刷新</el-button>
             
-            <el-button style="float: right" type="primary"  @click="start_lottery()" round plain>抽奖</el-button>
+            <el-button style="float: right" type="primary"  @click="start_lottery()" :loading="flag" round plain>抽奖</el-button>
             <el-radio-group v-model="radio_model" style="float: right;padding: 15px;">
                 <el-tooltip class="item" effect="dark" content="最近中签的4人，不会被抽中" placement="top">
                     <el-radio :label="1">专题演讲</el-radio>
@@ -230,7 +230,10 @@ window.onload = function(){
                     chouqian_his:[],
 
                     // 抽签类型
-                    radio_model:1
+                    radio_model:1,
+
+                    // 是否刷新中
+                    geting:false
                 }
             },
             methods:{
@@ -346,6 +349,7 @@ window.onload = function(){
                 // 请求参与抽奖的人员
                 get_emp_all(){
                     let root = this;
+                    root.geting = true;
                     if(root.flag){
                         alert('正在抽奖，请等待抽奖结果！');
                         return false;
@@ -356,6 +360,7 @@ window.onload = function(){
                         console.log(res.data)
                         root.emp_all = res.data.data
                         root.num = root.emp_all.length+1
+                        root.geting = false;
                     })
                 },
                 get_ajax(url,callback){
@@ -374,6 +379,7 @@ window.onload = function(){
                     .catch(function(err){
                         root.Message.error('系统错误！');
                         callback(err)
+                        root.geting = false;
                     })
                 },
                 /*公用的ajax post*/
