@@ -288,6 +288,22 @@ end)
 
 _M:get('/emp_',function(req,res,next)
     local new_arr = req.session.get("all_user") or {}
+
+    local lipin = req.query.lipin or ''
+   
+    local resp,err = action_model:his_chouqian(2,false)
+
+    if not utils.chk_is_null(lipin) and #new_arr > 0 and #resp >0 then
+        for k=1,#resp do
+            for j =1, #new_arr do
+                if resp[k].emp_no == new_arr[j].no then
+                    new_arr[j].status = 1
+                end
+            end
+        end
+        req.session.set("all_user",new_arr)
+    end
+        
     return res:json{
         data = new_arr,
         rv = 200

@@ -37,8 +37,10 @@ window.onload = function(){
                     // 是否刷新中
                     geting:false,
 
+                    // 是否显示礼品抽奖
+                    is_lipin:true,
                     // 历史记录类型
-                    his_raido:0,
+                    his_raido:1,
                     his_chouqian:[],
                 }
             },
@@ -79,16 +81,41 @@ window.onload = function(){
                 },
                 his_raido_change1(e){
                     console.log(e);
+                    this.message = '';
                     this.get_his_data(1);
                 },
                 get_his_data(type){
                     let root = this;
                     if(type==1){
+                        if(root.radio_model==0){
+                            return false;
+                        }
+                        if(root.radio_model==2){
+                            let url = "/action/emp_?lipin=1"
+                            root.get_ajax(url,function(res){
+                                console.log(res)
+                                root.emp_all = res.data.data
+                                if(root.chouqian_his.length>=25){
+                                    clearTimeout(root.lottery);
+                                    root.message = '所有人都已中奖！祝贺活动圆满成功！'
+                                    root.class_true=true;
+                                    // root.get_his_data(1);
+                                    setTimeout(function(){
+                                        $('#lottery li').css('opacity',1);
+                                        root.class_true=false;
+                                    },1200);
+                                    root.flag = false;
+                                }
+                            })
+                            
+                        }
                         let url = '/action/his?type='+root.radio_model;
                         root.get_ajax(url,function(res){
                             console.log(res)
                             root.chouqian_his = res.data.data
                         })
+                        
+                        
                     }else{
                         let url = '/action/his?type='+root.his_raido;
                         if(root.his_raido==0){
@@ -99,8 +126,6 @@ window.onload = function(){
                             root.his_chouqian = res.data.data
                         })
                     }
-                    console.log(root.chouqian_his,root.his_chouqian)
-                    
                 },
                 //产生随机数
                 rand(Min,Max){

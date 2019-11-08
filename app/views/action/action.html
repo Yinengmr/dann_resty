@@ -130,7 +130,7 @@
                         <a href="javascript:void(0);" @click="start_lottery()">
                             <img src="../static/images/j_but.jpg" width="100" height="90" alt="开始抽奖" /></a>
                 </div>
-                <div v-else style="color:#b6ffea;font-size: 28px;background-color: #226b80;
+                <div v-else :style="item.status==1 && radio_model==2?'background-color: #304d26':'background-color: #ae8686'" style="color:#b6ffea;font-size: 28px;
                 text-align:center;line-height: 120px;">
                         <!-- <img :src="'../../static/images/j_'+(Number(i)+1)+'.jpg'" width="100" height="90" alt="悟空公仔" /> -->
                         {{item.name}}
@@ -148,7 +148,7 @@
                     <el-radio :label="1">专题演讲</el-radio>
                 </el-tooltip>
                 <!-- <el-tooltip class="item" effect="dark" content="最近中签的4人，不会被抽中" placement="top"> -->
-                    <el-radio :label="2">礼品互赠</el-radio>
+                    <el-radio v-if="is_lipin" :label="2">礼品互赠</el-radio>
                 <!-- </el-tooltip> -->
                 <el-tooltip class="item" effect="dark" content="用于测试，不记录抽签历史" placement="top">
                     <el-radio :label="0">其他</el-radio>
@@ -181,8 +181,8 @@
         :direction="direction"
         :before-close="handleClose">
         <div style="text-align: center;font-size:28px;color:inherit;padding-bottom: 15px;;">抽签历史</div>
-        <span style="font-size: 16px;display: inline-block;padding: 5px 10px 5px 30px;line-height: 32px;"><b>类型：</b></span>
-        <el-radio-group v-model="his_raido" @change="his_raido_change2" style="padding: 5px 0 5px 10px;">
+        <span v-if="is_lipin" style="font-size: 16px;display: inline-block;padding: 5px 10px 5px 30px;line-height: 32px;"><b>类型：</b></span>
+        <el-radio-group v-if="is_lipin" v-model="his_raido" @change="his_raido_change2" style="padding: 5px 0 5px 10px;">
             <el-radio-button :label="1">专题演讲</el-radio-button>
             <el-radio-button :label="2">礼品互赠</el-radio-button>
             <el-radio-button :label="0">全部</el-radio-button>
