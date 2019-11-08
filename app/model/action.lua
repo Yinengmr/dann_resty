@@ -22,11 +22,17 @@ end
 -- limit true or false
 function action:his_chouqian(type,limit)
     local sql = [[
-        SELECT *
+        SELECT *,
+        case type when 1 then '专题演讲' 
+            when 2 then '礼品互赠'
+        
+        else '其他' end as remark
         FROM danny_chouqian_his
-        where type = :type
-        order by id desc
     ]]
+    if type ~= '' then
+        sql = sql..[[ where type = :type ]]
+    end
+    sql = sql..[[ order by id desc ]]
     if limit then
         sql = sql..[[ LIMIT 4 ]]
     end

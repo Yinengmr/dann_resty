@@ -16,103 +16,127 @@ local emp = {
     {
         no = 'F2846970',
         name = '程义能',
+        status = 0
     },
     {
         no = 'F2845879',
         name = '杨康',
+        status = 0
     },
     {
         no = 'F2847550',
         name = '邹东平',
+        status = 0
     },
     {
         no = 'F2847582',
         name = '杨光明',
+        status = 0
     },
     {
         no = 'F2846776',
-
         name = '胡鵬',
+        status = 0
     },
     {
         no = 'F2846786',
         name = '廖喜',
+        status = 0
     },
     {
         no = 'F2847568',
         name = '陳思思',
+        status = 0
     },
     {
         no = 'F2846176',
         name = '麻安龍',
+        status = 0
     },
     {
         no = 'F2846751',
         name = '任桃紅',
+        status = 0
     },
     {
         no = 'F2847765',
         name = '王歡',
+        status = 0
     },
     {
         no = 'F2847464',
         name = '王芳',
+        status = 0
     },
     {
         no = 'F2847577',
         name = '李名揚',
+        status = 0
     },
     {
         no = 'F2847583',
         name = '徐穎',
+        status = 0
     },
     {
         no = 'F2847588',
         name = '郭子佩',
+        status = 0
     },
     {
         no = 'F2816897',
         name = '沈軍兵',
+        status = 0
     },
     {
         no = 'F2847964',
         name = '徐海帆',
+        status = 0
     },
     {
         no = 'F2848022',
         name = '韋新會',
+        status = 0
     },
     {
         no = 'F2848035',
         name = '譙豐',
+        status = 0
     },
     {
         no = 'F2848001',
         name = '劉偉強',
+        status = 0
     },
     {
         no = 'F2847965',
         name = '王楚',
+        status = 0
     },
     {
         no = 'F2847233',
         name = '黄康高',
+        status = 0
     },
     {
         no = 'F2845367',
         name = '杨帆',
+        status = 0
     },
     {
         no = 'Ann',
         name = '宋沫盈',
+        status = 0
     },
     {
         no = 'j',
         name = 'J.malminds',
+        status = 0
     },
     {
         no = 'Maxine Lee',
         name = 'Maxine',
+        status = 0
     },
 }
 
@@ -125,9 +149,11 @@ end)
 -- 获取参与抽签人员
 _M:get('/emp',function(req, res, next)
     local new_arr = {}
-    while(#emp>0)
+    local emp_all = req.session.get("all_user") or emp
+
+    while(#emp_all>0)
     do
-        local no = math.random(1,#emp)
+        local no = math.random(1,#emp_all)
         
         --[[ if #new_arr ==7 then
             table.insert(new_arr,{
@@ -136,10 +162,10 @@ _M:get('/emp',function(req, res, next)
                 order_item = #new_arr+1
             })
         end ]]
-        if emp[no].no ~=false then
-            emp[no].order_item = #new_arr+1
-            table.insert(new_arr,emp[no])
-            table.remove(emp,no)
+        if emp_all[no].no ~=false then
+            emp_all[no].order_item = #new_arr+1
+            table.insert(new_arr,emp_all[no])
+            table.remove(emp_all,no)
         end
         
     end
@@ -185,25 +211,39 @@ _M:post('',function(req,res,next)
         }
     end
     local pass = {}
-    -- 略过最近的4人
-    local resp,err = action_model:his_chouqian(1,true)
-    pass = resp or {}
 
-    table.insert(pass,{
-        emp_name = '程义能',
-        emp_no='F2846970'
-    })
-    table.insert(pass,{
-        emp_name = 'Maxine',
-        emp_no='Maxine Lee'
-    })
-    table.insert(pass,{
-        emp_name = 'J.malminds',
-        emp_no='j'
-    })
-    
-    if not utils.chk_is_null(type) and tonumber(type) ==0 then
-        pass = {}
+    if not utils.chk_is_null(type) and tonumber(type) ==1 then
+
+        -- 略过最近的4人
+        local resp,err = action_model:his_chouqian(1,true)
+        pass = resp or {}
+
+        table.insert(pass,{
+            emp_name = '程义能',
+            emp_no='F2846970'
+        })
+        table.insert(pass,{
+            emp_name = 'Maxine',
+            emp_no='Maxine Lee'
+        })
+        table.insert(pass,{
+            emp_name = 'J.malminds',
+            emp_no='j'
+        })
+    end
+    if not utils.chk_is_null(type) and tonumber(type) ==2 then 
+        local data = req.session.get("all_user") or {}
+        local resp,err = action_model:his_chouqian(2,false)
+        pass = resp or {}
+
+        for k=1,#data do
+            if k == no then
+                data[k].status = 1
+                ngx.log(ngx.DEBUG,'===============',data[no].status)
+                -- table.insert(pass,data[no])
+            end
+        end
+        req.session.set("all_user",data)
     end
     
     local no = get_lucky(data,pass)
@@ -235,7 +275,8 @@ _M:post('',function(req,res,next)
 end)
 
 _M:get('/his',function(req,res,next)
-    local resp,err = action_model:his_chouqian(1,false)
+    local type = req.query.type or ''
+    local resp,err = action_model:his_chouqian(type,false)
     if not err and resp then
         return res:json{
             rv = 200,
@@ -243,5 +284,13 @@ _M:get('/his',function(req,res,next)
             data = resp
         }
     end
+end)
+
+_M:get('/emp_',function(req,res,next)
+    local new_arr = req.session.get("all_user") or {}
+    return res:json{
+        data = new_arr,
+        rv = 200
+    }
 end)
 return _M
