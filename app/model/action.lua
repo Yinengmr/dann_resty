@@ -24,7 +24,7 @@ function action:his_chouqian(type,limit)
     local sql = [[
         SELECT *
         FROM danny_chouqian_his
-        where type = 1
+        where type = :type
         order by id desc
     ]]
     if limit then

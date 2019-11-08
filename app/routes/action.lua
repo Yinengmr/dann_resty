@@ -157,17 +157,18 @@ local function get_lucky(data,pass)
     if #pass == 0 then
         return no
     end
-
+    ngx.log(ngx.DEBUG,'======抽中====='..data[no].name)
     local is_pass = false
     for k=1,#pass  do
         if data[no].no== pass[k].emp_no then
-            ngx.log(ngx.DEBUG,'==================',data[no].no)
+            ngx.log(ngx.DEBUG,'抽中了白名单',data[no].no)
             is_pass = true
             break
         end
     end
     if is_pass then
-        get_lucky(data,pass)
+        ngx.log(ngx.DEBUG,'抽中了白名单再次抽奖'..data[no].no)
+        return get_lucky(data,pass)
     end
     return no
 end
@@ -183,10 +184,10 @@ _M:post('',function(req,res,next)
             msg = 'session 已过期，请刷新页面！'
         }
     end
-
+    local pass = {}
     -- 略过最近的4人
-    local resp,err = action_model:his_chouqian(true)
-    local pass = resp or {}
+    local resp,err = action_model:his_chouqian(1,true)
+    pass = resp or {}
 
     table.insert(pass,{
         emp_name = '程义能',
@@ -234,7 +235,7 @@ _M:post('',function(req,res,next)
 end)
 
 _M:get('/his',function(req,res,next)
-    local resp,err = action_model:his_chouqian(false)
+    local resp,err = action_model:his_chouqian(1,false)
     if not err and resp then
         return res:json{
             rv = 200,
