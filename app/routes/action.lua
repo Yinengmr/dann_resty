@@ -302,6 +302,13 @@ _M:get('/emp_',function(req,res,next)
             end
         end
         req.session.set("all_user",new_arr)
+    else
+        for j =1, #new_arr do
+            if resp[k].emp_no == new_arr[j].no then
+                new_arr[j].status = 0
+            end
+        end
+        req.session.set("all_user",new_arr)
     end
         
     return res:json{
