@@ -1,4 +1,5 @@
 var APP = APP || {}
+var common_js = new common(); 
 window.onload = function(){
     // 模塊初始化；
     APP.line_emp.init();
@@ -38,7 +39,7 @@ window.onload = function(){
                     geting:false,
 
                     // 是否显示礼品抽奖
-                    is_lipin:true,
+                    is_lipin:false,
                     // 历史记录类型
                     his_raido:1,
                     his_chouqian:[],
@@ -271,11 +272,30 @@ window.onload = function(){
                          callback(err)
                     })
                 },
+                // 刪除 禮品交換記錄
+                del_his(row){
+                    let url = '/action/del_his';
+                    let data = row
+                    axios.post(url,data)
+                    .then(function(res){
+                        if(res.data.rv !=200){
+                            root.$Message.info(res.data.msg);
+                            root.get_his_data(2);
+                        }else{
+                            root.$Message.info(res.data.msg)
+                        }
+                        
+                    })
+                    .catch(function(err){
+                         
+                    })
+                }
             },
             created: function () {
                 console.log('aa')
                 this.get_emp_all();
                 this.get_his_data(1);
+                console.log(common_js.time_difference('2019-11-14 17:19:00','2019-11-14 17:17:00'))
             }
         },
         init: function() {

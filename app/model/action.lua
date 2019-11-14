@@ -44,4 +44,16 @@ function action:his_chouqian(type,limit)
 
 end
 
+function action:del_his(type,id)
+    local sql = [[
+        delete from  danny_chouqian_his
+        where id = :id
+    ]]
+    local sqlparams = {
+        type = type,
+        id = id
+    }
+    local res,err = db:query(sql,sqlparams)
+    return res,err
+end
 return action

@@ -293,6 +293,10 @@ _M:get('/emp_',function(req,res,next)
    
     local resp,err = action_model:his_chouqian(2,false)
 
+    for j =1, #new_arr do
+        new_arr[j].status = 0
+    end
+
     if not utils.chk_is_null(lipin) and #new_arr > 0 and #resp >0 then
         for k=1,#resp do
             for j =1, #new_arr do
@@ -302,15 +306,33 @@ _M:get('/emp_',function(req,res,next)
             end
         end
         req.session.set("all_user",new_arr)
-    else
-        for j =1, #new_arr do
-            new_arr[j].status = 0
-        end
-        req.session.set("all_user",new_arr)
     end
         
     return res:json{
         data = new_arr,
+        rv = 200
+    }
+end)
+
+_M:post('/del_his',function(req,res,next)
+    local id = req.body.id or nil
+    local type = req.body.type or nil
+
+    if utils.chk_is_null(id,type) then
+        return res:json{
+            rv = 501,
+            msg = "參數錯誤"
+        }
+    end
+    if type ~= 2 then
+        return res:json{
+            rv = 501,
+            msg = "參數錯誤"
+        }
+    end
+    local result,err = action_model:del_his(type,id)
+    return res:json{
+        msg = "success",
         rv = 200
     }
 end)

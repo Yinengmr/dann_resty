@@ -193,11 +193,11 @@
                 <span style="float: left;margin-right:30px;width:30px;">{{i+1}}</span>
                 <el-tag :type="item.type==1?'':'warning'" style="font-size: 16px;">{{ item.remark }}</el-tag>
                 {{ item.creat_at +' - '+item.emp_name}}
-               
+                <el-link  v-if="his_raido==2" @click="del_his(item)" icon="el-icon-delete">刪除</el-link>
             </div>
         </div>
         <div v-else>
-            <h2 style="text-align: center">暂无记录</h2>
+            <h2 style="text-align: center" @click="del_his(item)">暂无记录</h2>
         </div>
     </el-drawer>
   </div>
@@ -209,4 +209,5 @@
 <script src="../../static/libs/element_ui/2.12.0/index.js"></script>
 <script src="../../static/js/jquery.js"></script>
 <script src='../../static/libs/axios/axios-0.18.0.min.js'></script>
+<script src='../../static/js/common.js'></script>
 <script src='../../static/js/action/action.js'></script>
