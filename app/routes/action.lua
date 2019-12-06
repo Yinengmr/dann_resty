@@ -3,6 +3,7 @@ local ipairs = ipairs
 local cjson = require("cjson")
 local utils = require("app.libs.utils")
 
+local emp = require("app.emp_list")
 
 -- local config  = require("app.config.".. ngx.shared.config:get("config"))
 local config  = require("app.config.config-local")
@@ -11,135 +12,6 @@ local lor = require("lor.index")
 local _M = lor:Router()
 
 local MAX_NUM_USER = 22
-
-local emp = {
-    {
-        no = 'F2846970',
-        name = '程义能',
-        status = 0
-    },
-    {
-        no = 'F2845879',
-        name = '杨康',
-        status = 0
-    },
-    {
-        no = 'F2847550',
-        name = '邹东平',
-        status = 0
-    },
-    {
-        no = 'F2847582',
-        name = '杨光明',
-        status = 0
-    },
-    {
-        no = 'F2846776',
-        name = '胡鵬',
-        status = 0
-    },
-    {
-        no = 'F2846786',
-        name = '廖喜',
-        status = 0
-    },
-    {
-        no = 'F2847568',
-        name = '陳思思',
-        status = 0
-    },
-    {
-        no = 'F2846176',
-        name = '麻安龍',
-        status = 0
-    },
-    {
-        no = 'F2846751',
-        name = '任桃紅',
-        status = 0
-    },
-    {
-        no = 'F2847765',
-        name = '王歡',
-        status = 0
-    },
-    {
-        no = 'F2847464',
-        name = '王芳',
-        status = 0
-    },
-    {
-        no = 'F2847577',
-        name = '李名揚',
-        status = 0
-    },
-    {
-        no = 'F2847583',
-        name = '徐穎',
-        status = 0
-    },
-    {
-        no = 'F2847588',
-        name = '郭子佩',
-        status = 0
-    },
-    {
-        no = 'F2816897',
-        name = '沈軍兵',
-        status = 0
-    },
-    {
-        no = 'F2847964',
-        name = '徐海帆',
-        status = 0
-    },
-    {
-        no = 'F2848022',
-        name = '韋新會',
-        status = 0
-    },
-    {
-        no = 'F2848035',
-        name = '譙豐',
-        status = 0
-    },
-    {
-        no = 'F2848001',
-        name = '劉偉強',
-        status = 0
-    },
-    {
-        no = 'F2847965',
-        name = '王楚',
-        status = 0
-    },
-    {
-        no = 'F2847233',
-        name = '黄康高',
-        status = 0
-    },
-    {
-        no = 'F2845367',
-        name = '杨帆',
-        status = 0
-    },
-    {
-        no = 'Ann',
-        name = '宋沫盈',
-        status = 0
-    },
-    {
-        no = 'j',
-        name = 'J.malminds',
-        status = 0
-    },
-    {
-        no = 'Maxine Lee',
-        name = 'Maxine',
-        status = 0
-    },
-}
-
 
 -- 抽签页面
 _M:get("", function(req, res, next)
@@ -223,12 +95,8 @@ _M:post('',function(req,res,next)
             emp_no='F2846970'
         })
         table.insert(pass,{
-            emp_name = 'Maxine',
-            emp_no='Maxine Lee'
-        })
-        table.insert(pass,{
-            emp_name = 'J.malminds',
-            emp_no='j'
+            emp_name = '刘雪梅',
+            emp_no='G4704621'
         })
     end
     if not utils.chk_is_null(type) and tonumber(type) ==2 then 
