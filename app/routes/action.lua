@@ -134,6 +134,7 @@ _M:post('',function(req,res,next)
         rv = 200,
         lucky = {
             name = data[no].name,
+            name_en = data[no].name_en,
             no   = data[no].order_item,
             emp_no  = data[no].no,
             -- lucky_his = lucky_his,

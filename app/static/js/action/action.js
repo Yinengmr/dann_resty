@@ -39,13 +39,25 @@ window.onload = function(){
                     geting:false,
 
                     // 是否显示礼品抽奖
-                    is_lipin:false,
+                    is_lipin:true,
                     // 历史记录类型
                     his_raido:1,
                     his_chouqian:[],
                 }
             },
             methods:{
+                /**@function div 背景色 */
+                div_bg(item){
+                    let root = this;
+                    if(item.status==1 && root.radio_model==2){
+                        return {
+                            "li_div_bg2":true
+                        }
+                    }
+                    return {
+                        "li_div_bg":true
+                    }
+                },
                 top4(i){
                     if(i<5){
                         return "color:#51dacf"
@@ -82,6 +94,7 @@ window.onload = function(){
                 },
                 his_raido_change1(e){
                     console.log(e);
+                    // $('#lottery li div').attr("class", "li_div_bg");
                     this.message = '';
                     this.get_his_data(1);
                 },
@@ -98,12 +111,13 @@ window.onload = function(){
                                 root.emp_all = res.data.data
                                 if(root.chouqian_his.length>=25){
                                     clearTimeout(root.lottery);
-                                    root.message = '所有人都已中奖！祝贺活动圆满成功！'
+                                    
                                     root.class_true=true;
                                     // root.get_his_data(1);
                                     setTimeout(function(){
                                         $('#lottery li').css('opacity',1);
                                         root.class_true=false;
+                                        root.message = '所有人都已中奖！祝贺活动圆满成功！'
                                     },1200);
                                     root.flag = false;
                                 }
@@ -180,14 +194,26 @@ window.onload = function(){
                 //抽奖效果展示
                 show_lottery(){
                     let root = this
+                    var audio= new Audio("../../static/15756424915897.mp3");//这里的路径写上mp3文件在项目中的绝对路径
                     if(root.index>root.num-2){
                         root.index = 0;
                         root.cycle--;
                     }
-                    $('#lottery li').css('opacity',0.3);
-                    $('#lottery_'+root.index).css('opacity',1);
+                    // $('#lottery li div').attr("class", "li_div_bg");
+                    if(root.index > 0){
+                        $('#lottery_'+(root.index-1)+' div').attr("class","li_div_bg");
+                    }
+                    if(root.index == 0){
+                        $('#lottery_24 div').attr("class","li_div_bg");
+                    }
+
+                    $('#lottery_'+root.index+' div').attr("class","li_div_current_bg");
+
                     root.message = root.emp_all[root.index].name
-                    console.log(root.index,root.message)
+
+                    audio.play();
+
+                    console.log(root.index,root.message,root.emp_all[root.index].status)
                     // $('#lottery_8').css('opacity',1);
                     if(root.index>root.fast){
                         root.speed=100;//开始加速
@@ -198,11 +224,12 @@ window.onload = function(){
                     // console.log(root.cycle)
                     if(root.cycle<=0 && root.index==root.lucky-1){//结束抽奖，选中号码
                         clearTimeout(root.lottery);
-                        root.message = '恭喜：'+root.emp_name+' 中签'
+                        root.message = '恭喜：'+root.emp_name+' 中签';
+                        let i = root.index;
                         root.class_true=true;
                         root.get_his_data(1);
+                        $('#lottery_'+i+' div').attr("class","li_div_bg li_div_lucky");
                         setTimeout(function(){
-                            $('#lottery li').css('opacity',1);
                             root.class_true=false;
                         },1200);
                         root.flag = false;
@@ -236,6 +263,7 @@ window.onload = function(){
                         },200)
                         
                     })
+                    $('#lottery li div').attr("class", "li_div_bg");
                 },
                 get_ajax(url,callback){
                     let root =this;
@@ -274,17 +302,17 @@ window.onload = function(){
                 },
                 // 刪除 禮品交換記錄
                 del_his(row){
+                    let root = this;
                     let url = '/action/del_his';
                     let data = row
                     axios.post(url,data)
                     .then(function(res){
                         if(res.data.rv !=200){
                             root.$Message.info(res.data.msg);
-                            root.get_his_data(2);
                         }else{
                             root.$Message.info(res.data.msg)
                         }
-                        
+                        root.get_his_data(2);
                     })
                     .catch(function(err){
                          

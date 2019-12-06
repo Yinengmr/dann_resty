@@ -15,12 +15,87 @@ h2 { margin:0; padding:20px 0; }
 #lottery{
     width:666px;
     height:666px;
-    padding: 6px;
+    padding: 8px;
     border-radius: 12px;
-    background:#a0cc78;border:1px solid #4A558B;
+    background:#bac2f6;
 }
-#lottery li{ float:left; width:120px; height:120px; margin:5px; display:inline;}
-
+#lottery li{
+    float:left; width:120px; height:120px; margin:5px; display:inline;
+}
+.li_div_bg {
+    background-color: #ae8686
+}
+.li_div_bg2 {
+    background-color: rgb(93, 141, 77);
+}
+.li_div_current_bg {
+    background-color: #e12c2c;
+}
+.li_div_lucky {
+    z-index: 99;
+    background-color: #ae8686;
+}
+@-webkit-keyframes li_div_lucky {
+    0% {
+        background-color: #e12c2c;
+    }
+    10% {
+        background-color: #35d357;
+    }
+    15% {
+        background-color: #e12c2c;
+    }
+    30% {
+        background-color: #35d357;
+    }
+    45% {
+        background-color: #e12c2c;
+    }
+    60% {
+        background-color: #35d357;
+    }
+}
+@keyframes li_div_lucky {
+    0% {
+        background-color: #e12c2c;
+    }
+    10% {
+        background-color: #35d357;
+    }
+    15% {
+        background-color: #e12c2c;
+    }
+    30% {
+        background-color: #35d357;
+    }
+    45% {
+        background-color: #e12c2c;
+    }
+    60% {
+        background-color: #35d357;
+    }
+}
+.li_div_lucky {
+    -webkit-animation-name: li_div_lucky;
+    -ms-animation-name: li_div_lucky;
+    animation-name: li_div_lucky;
+    -webkit-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    /* animation-iteration-count: infinite; */
+    animation-iteration-count: 1; /* 1次 */
+    -webkit-animation-timing-function: 1s;
+    -ms-animation-timing-function:1s;
+    animation-timing-function: 1s;
+    -webkit-animation-delay: 0s;
+    -ms-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-play-state: running;
+    -ms-animation-play-state: running;
+    animation-play-state: running;
+}
 .shaky {
     display: inline-block;
     padding: 1px;
