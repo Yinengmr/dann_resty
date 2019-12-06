@@ -16,9 +16,14 @@
     <div style="float:left;width:660px;height:660px;margin:0 0 40px 40px">
         <ul id="lottery">
             <li :id="'lottery_'+i" v-for="item,i in emp_all">
-                <div :class="div_bg(item)" :status="item.status"
+                <div class="li_div_bg"
+                
                 style="color:#b6ffea;font-size: 28px;border-radius:18px;
-                text-align:center;height:120px;padding: 15px 0px;">
+                text-align:center;height:120px;padding: 15px 0px;position: relative;">
+                <span v-if="item.status==1 && radio_model==2" 
+                style="position: absolute;top: 0px;right:0px;border-radius:0 18px 0 0 ;
+                border: 23px solid;border-color:  #8eed5f #8eed5f transparent transparent;">
+                </span>
                         <p>{{item.name}}</p>
                         <p style="color:#163f69">{{item.name_en}}</p>
                 </div>

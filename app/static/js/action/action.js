@@ -1,5 +1,6 @@
 var APP = APP || {}
-var common_js = new common(); 
+var common_js = new common();
+var audio= new Audio("../../static/15756424915897.mp3");//这里的路径写上mp3文件在项目中的绝对路径
 window.onload = function(){
     // 模塊初始化；
     APP.line_emp.init();
@@ -46,18 +47,6 @@ window.onload = function(){
                 }
             },
             methods:{
-                /**@function div 背景色 */
-                div_bg(item){
-                    let root = this;
-                    if(item.status==1 && root.radio_model==2){
-                        return {
-                            "li_div_bg2":true
-                        }
-                    }
-                    return {
-                        "li_div_bg":true
-                    }
-                },
                 top4(i){
                     if(i<5){
                         return "color:#51dacf"
@@ -194,7 +183,7 @@ window.onload = function(){
                 //抽奖效果展示
                 show_lottery(){
                     let root = this
-                    var audio= new Audio("../../static/15756424915897.mp3");//这里的路径写上mp3文件在项目中的绝对路径
+                    audio.load();
                     if(root.index>root.num-2){
                         root.index = 0;
                         root.cycle--;
@@ -213,7 +202,7 @@ window.onload = function(){
 
                     audio.play();
 
-                    console.log(root.index,root.message,root.emp_all[root.index].status)
+                    console.log(root.index,root.message)
                     // $('#lottery_8').css('opacity',1);
                     if(root.index>root.fast){
                         root.speed=100;//开始加速
