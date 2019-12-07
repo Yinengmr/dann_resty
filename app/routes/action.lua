@@ -11,8 +11,6 @@ local action_model = require("app.model.action")
 local lor = require("lor.index")
 local _M = lor:Router()
 
-local MAX_NUM_USER = 22
-
 -- 抽签页面
 _M:get("", function(req, res, next)
      res:render('action/action')
@@ -27,13 +25,6 @@ _M:get('/emp',function(req, res, next)
     do
         local no = math.random(1,#emp_all)
         
-        --[[ if #new_arr ==7 then
-            table.insert(new_arr,{
-                no = false,
-                name = '站位',
-                order_item = #new_arr+1
-            })
-        end ]]
         if emp_all[no].no ~=false then
             emp_all[no].order_item = #new_arr+1
             table.insert(new_arr,emp_all[no])
@@ -50,25 +41,20 @@ end)
 
 -- 获取号码
 local function get_lucky(data,pass)
-    local no = math.random(1,MAX_NUM_USER)
-
-    if #pass == 0 then
-        return no
+    
+    if #data == 1 then
+        return 1
     end
-    ngx.log(ngx.DEBUG,'======抽中====='..data[no].name)
     local is_pass = false
-    for k=1,#pass  do
-        if data[no].no== pass[k].emp_no then
-            ngx.log(ngx.DEBUG,'抽中了白名单',data[no].no)
-            table.remove(data,k)
-            is_pass = true
-            break
+    for i=1,#pass do
+        for k=1,#data do
+            if pass[i].emp_no==data[k].no then
+                table.remove(data,k)
+                break
+            end
         end
     end
-    if is_pass then
-        ngx.log(ngx.DEBUG,'抽中了白名单再次抽奖'..data[no].no)
-        return get_lucky(data,pass)
-    end
+    local no = math.random(1,#data)
     return no
 end
 

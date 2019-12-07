@@ -310,6 +310,7 @@ window.onload = function(){
                             root.$Message.info(res.data.msg);
                         }else{
                             root.$Message.info(res.data.msg)
+                            root.message = ''
                         }
                         root.get_his_data(1);
                         root.get_his_data(2);
