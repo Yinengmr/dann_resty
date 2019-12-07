@@ -1,6 +1,8 @@
 var APP = APP || {}
 var common_js = new common();
-var audio= new Audio("../../static/15756424915897.mp3");//这里的路径写上mp3文件在项目中的绝对路径
+var audio04= new Audio("../../static/music/04.mp3");
+var audio05= new Audio("../../static/music/05.mp3");
+var audio= new Audio("../../static/music/03.mp3");//这里的路径写上mp3文件在项目中的绝对路径
 window.onload = function(){
     // 模塊初始化；
     APP.line_emp.init();
@@ -54,6 +56,7 @@ window.onload = function(){
                 },
                 // 关闭历史抽屉
                 handleClose(done) {
+                    audio05.play();
                     done();
                     // this.$confirm('确认关闭？')
                     // .then(_ => {
@@ -63,6 +66,7 @@ window.onload = function(){
                 },
                 // his
                 get_his(){
+                    audio05.play();
                     let root = this;
                     if(root.flag){
                         alert('正在抽奖，请等待抽奖结果！');
@@ -78,10 +82,12 @@ window.onload = function(){
                 },
                 // 历史抽签全部
                 his_raido_change2(e){
+                    audio05.play();
                     console.log(e);
                     this.get_his_data(2);
                 },
                 his_raido_change1(e){
+                    audio05.play();
                     console.log(e);
                     // $('#lottery li div').attr("class", "li_div_bg");
                     this.message = '';
@@ -192,16 +198,15 @@ window.onload = function(){
                     $('#lottery_'+root.index+' div').attr("class","li_div_current_bg");
 
                     root.message = root.emp_all[root.index].name
-
-                    audio.play();
-
+                    var audio1= new Audio("../../static/music/01.mp3");
+                    audio1.play();
                     console.log(root.index,root.message)
                     // $('#lottery_8').css('opacity',1);
                     if(root.index>root.fast){
                         root.speed=100;//开始加速
                     } 
-                    if(root.cycle==0 && root.lucky-root.index<root.rand(2,5)){
-                        root.speed=root.speed+200;//开始减速
+                    if(root.cycle==0 && root.lucky-root.index<=5){
+                        root.speed=root.speed+250;//开始减速
                     } 
                     // console.log(root.cycle)
                     if(root.cycle<=0 && root.index==root.lucky-1){//结束抽奖，选中号码
@@ -210,6 +215,10 @@ window.onload = function(){
                         let i = root.index;
                         root.class_true=true;
 
+                        audio04.play();
+                        setTimeout(function(){
+                            audio.play();
+                        },250)
                         $('#lottery_'+i+' div').attr("class","li_div_bg li_div_lucky");
 
                         // 戴绿帽

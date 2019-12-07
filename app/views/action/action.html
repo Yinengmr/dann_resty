@@ -32,7 +32,7 @@
     </div>
     <div style="float:left;width:654px;height:654px;margin-left:40px;">
         <div style="width:530px;margin:0px auto;">
-            <el-button @click="get_emp_all();" type="info" :loading="geting" :disabled="flag" round plain>{{geting?'刷新中':'刷新'}}</el-button>
+            <el-button @click="audio05.play();get_emp_all();" type="info" :loading="geting" :disabled="flag" round plain>{{geting?'刷新中':'刷新'}}</el-button>
             
             <el-button style="float: right" type="primary"  @click="start_lottery()" :disabled="geting" :loading="flag" round plain>{{flag?'抽奖中':'抽奖'}}</el-button>
             <el-radio-group v-model="radio_model" @change="his_raido_change1" style="float: right;padding: 15px;">
@@ -85,7 +85,7 @@
                 <span style="float: left;margin-right:30px;width:30px;">{{i+1}}</span>
                 <el-tag :type="item.type==1?'':'warning'" style="font-size: 16px;">{{ item.remark }}</el-tag>
                 {{ item.creat_at +' - '+item.emp_name}}
-                <el-link  v-if="his_raido==2" @click="del_his(item)" icon="el-icon-delete">刪除</el-link>
+                <el-link  v-if="his_raido==2" @click="audio05.play();del_his(item)" icon="el-icon-delete">刪除</el-link>
             </div>
         </div>
         <div v-else>

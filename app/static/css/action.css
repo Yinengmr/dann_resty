@@ -51,8 +51,17 @@ h2 { margin:0; padding:20px 0; }
     45% {
         background-color: #e12c2c;
     }
-    60% {
+    50% {
         background-color: #35d357;
+    }
+    60% {
+        background-color: #e12c2c;
+    }
+    75% {
+        background-color: #35d357;
+    }
+    90% {
+        background-color: #e12c2c;
     }
 }
 @keyframes li_div_lucky {
@@ -71,8 +80,17 @@ h2 { margin:0; padding:20px 0; }
     45% {
         background-color: #e12c2c;
     }
-    60% {
+    50% {
         background-color: #35d357;
+    }
+    60% {
+        background-color: #e12c2c;
+    }
+    75% {
+        background-color: #35d357;
+    }
+    90% {
+        background-color: #e12c2c;
     }
 }
 .li_div_lucky {
@@ -85,7 +103,7 @@ h2 { margin:0; padding:20px 0; }
     -webkit-animation-iteration-count: infinite;
     -ms-animation-iteration-count: infinite;
     /* animation-iteration-count: infinite; */
-    animation-iteration-count: 1; /* 1次 */
+    animation-iteration-count: 4; /* 1次 */
     -webkit-animation-timing-function: 1s;
     -ms-animation-timing-function:1s;
     animation-timing-function: 1s;
