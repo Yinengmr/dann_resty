@@ -69,6 +69,45 @@ _M:post('',function(req,res,next)
             msg = 'session 已过期，请刷新页面！'
         }
     end
+
+    if type ==1 then
+        -- 抽签口令
+        local key = req.body.key
+        if utils.chk_is_null(key) then
+            return res:json{
+                rv = 501,
+                msg = "请输入口令"
+            }
+        end
+
+        --redis on
+        local red = redis:new()
+        red:set_timeout(timeout)
+
+        local ok, err = red:connect(host,port)
+        if not ok or err then
+            return nil, err;
+        end
+        -- 随机口令
+
+        local key_ = red:get('key')
+
+        if key ~= key_ then
+            return res:json{
+                rv = 501,
+                msg = "口令错误！"
+            }
+        end
+
+        --redis off 
+        local ok, err = red:set_keepalive(max_idle_timeout,pool_size)
+        
+        if not ok or err then
+            ngx.log(ngx.ERR,"failed to set_keepalive: ", err)
+            return
+        end
+    end
+
     local pass = {}
 
     if not utils.chk_is_null(type) and tonumber(type) ==1 then

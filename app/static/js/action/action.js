@@ -162,6 +162,11 @@ window.onload = function(){
                     root.fast  = root.rand(2,20);      //在哪个位置开始加速
                     root.cycle = root.rand(1,2);      //转动多少圈
                     root.speed = 300;            //开始时速度
+
+                    // 口令输入
+                    if(root.radio_model==1){
+                        
+                    }
                     // 后端抽签
                     root.post_ajax('/action?type='+root.radio_model,{},function(res){
                         if(res.rv!=200){
