@@ -126,7 +126,7 @@ window.onload = function(){
                             url = '/action/his?type=';
                         }
                         root.get_ajax(url,function(res){
-                            console.log(res)
+                            console.log(res);
                             root.his_chouqian = res.data.data
                         })
                     }
@@ -168,13 +168,6 @@ window.onload = function(){
                         root.emp_name = res.lucky.name
                         root.emp_no = res.lucky.emp_no
                         root.class_true=false;
-                        if(root.radio_model == 2){
-                            let url = "/action/emp_"
-                            root.get_ajax(url,function(res){
-                                console.log(res)
-                                root.emp_all = res.data.data
-                            })
-                        }
                         root.show_lottery();
                         
                     })
@@ -216,8 +209,16 @@ window.onload = function(){
                         root.message = '恭喜：'+root.emp_name+' 中签';
                         let i = root.index;
                         root.class_true=true;
-                        root.get_his_data(1);
+
                         $('#lottery_'+i+' div').attr("class","li_div_bg li_div_lucky");
+
+                        // 戴绿帽
+                        if(root.radio_model == 2){
+                            root.emp_all[i].status = 1;
+                        }
+                        // 查询历史记录
+                        root.get_his_data(1);
+
                         setTimeout(function(){
                             root.class_true=false;
                         },1200);
@@ -301,6 +302,7 @@ window.onload = function(){
                         }else{
                             root.$Message.info(res.data.msg)
                         }
+                        root.get_his_data(1);
                         root.get_his_data(2);
                     })
                     .catch(function(err){
