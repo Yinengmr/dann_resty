@@ -60,6 +60,7 @@ local function get_lucky(data,pass)
     for k=1,#pass  do
         if data[no].no== pass[k].emp_no then
             ngx.log(ngx.DEBUG,'抽中了白名单',data[no].no)
+            table.remove(data,k)
             is_pass = true
             break
         end
