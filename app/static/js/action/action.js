@@ -219,15 +219,20 @@ window.onload = function(){
                         
                         spawnSeed();
                         S.init('恭喜：'+root.emp_name+' 中签');
-                        for(let i=0;i<15;i++){
+                        for(let i=0;i<12;i++){
                             setTimeout(function(){
-                                spawnSeed();
                                 setTimeout(function(){
                                     spawnSeed();
                                 },70)
                                 setTimeout(function(){
                                     spawnSeed();
                                 },100)
+                                setTimeout(function(){
+                                    spawnSeed();
+                                },200)
+                                setTimeout(function(){
+                                    spawnSeed();
+                                },400)
                             },700*i)
                         }
                         let i = root.index;
@@ -235,6 +240,7 @@ window.onload = function(){
 
                         audio04.play();
                         setTimeout(function(){
+                            audio.volume = 0.82;
                             audio.play();
                         },250)
                         $('#lottery_'+i+' div').attr("class","li_div_bg li_div_lucky");

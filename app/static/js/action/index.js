@@ -173,7 +173,7 @@ S.UI = (function () {
           //     S.Shape.switchShape(S.ShapeBuilder.letter(index), true);
           //   }
           // }, 1000, value, true);
-          // break;
+          break;
 
         case 'rectangle':
           value = value && value.split('x');
@@ -200,32 +200,27 @@ S.UI = (function () {
                 time = t;
                 S.Shape.switchShape(S.ShapeBuilder.letter(time));
               }
-            }, 100);
+            }, 2000);
           }
           break;
 
         default:
           S.Shape.switchShape(S.ShapeBuilder.letter(current[0] === cmd ? 'What?' : current));
       }
-    }, 80, sequence.length);
+    }, 0, sequence.length);
   }
 
   function checkInputWidth(e) {
     if (input.value.length > 18) {
       ui.classList.add('ui--wide');
     } else {
-      setTimeout(function(){
-        ui.classList.remove('ui--wide');
-      },3000)
-      
+      ui.classList.remove('ui--wide');
     }
 
     if (firstAction && input.value.length > 0) {
       ui.classList.add('ui--enter');
     } else {
-      setTimeout(function(){
-        ui.classList.remove('ui--enter');
-      },3000)
+      ui.classList.remove('ui--enter');
     }
   }
 
