@@ -40,6 +40,8 @@ function _M:get_key()
     k = math.floor((ngx_re.split(k,'-')[1] + ngx_re.split(k,'-')[2] 
         + ngx_re.split(k,'-')[3] + ngx_re.split(k,'-')[4])*0.6 
         + ngx_re.split(k,'-')[4])..string.char(97+ ngx_re.split(k,'-')[4])
+
+    -- 替换第三个数字为字母
     red:set('key',str)
     local key = red:get('key')
     ngx_log(ngx.ERR, "生成抽签口令\""..k.."\"")

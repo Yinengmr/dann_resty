@@ -165,7 +165,7 @@ window.onload = function(){
 
                     // 口令输入
                     if(root.radio_model==1){
-                        
+
                     }
                     // 后端抽签
                     root.post_ajax('/action?type='+root.radio_model,{},function(res){
@@ -216,7 +216,14 @@ window.onload = function(){
                     // console.log(root.cycle)
                     if(root.cycle<=0 && root.index==root.lucky-1){//结束抽奖，选中号码
                         clearTimeout(root.lottery);
-                        root.message = '恭喜：'+root.emp_name+' 中签';
+                        
+                        spawnSeed();
+                        S.init('恭喜：'+root.emp_name+' 中签');
+                        for(let i=0;i<10;i++){
+                            setTimeout(function(){
+                                spawnSeed();
+                            },800*i)
+                        }
                         let i = root.index;
                         root.class_true=true;
 
@@ -234,6 +241,7 @@ window.onload = function(){
                         root.get_his_data(1);
 
                         setTimeout(function(){
+                            root.message = '恭喜：'+root.emp_name+' 中签';
                             root.class_true=false;
                         },1200);
                         root.flag = false;
@@ -329,7 +337,28 @@ window.onload = function(){
                 console.log('aa')
                 this.get_emp_all();
                 this.get_his_data(1);
-                console.log(common_js.time_difference('2019-11-14 17:19:00','2019-11-14 17:17:00'))
+                console.log(common_js.time_difference('2019-11-14 17:19:00','2019-11-14 17:17:00'));
+
+/*                 var parent=document.getElementById("app");
+                var child=document.createElement("span");//创建新的节点
+                child.classList.add("play");
+                child.setAttribute("id","play");
+                parent.appendChild(child); //在第二个节点之前插入新创建的节点
+
+                setTimeout(function(){
+                    $('.play').fireworks({ 
+                        sound: false, // sound effect
+                        opacity: 0.9, 
+                        width: '100px', 
+                        height: '100px' 
+                    });
+                },2000)
+                
+                setTimeout(function(){
+                    var parent=document.getElementById("app");
+                    let child=document.getElementById("play");
+                    parent.removeChild(child);
+                },7000) */
             }
         },
         init: function() {

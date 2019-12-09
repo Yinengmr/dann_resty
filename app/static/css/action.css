@@ -13,27 +13,31 @@ h2 { margin:0; padding:20px 0; }
 #footer{margin:15px auto; line-height:24px; text-align:center;color:#999; font-size:12px;padding:12px;}
 
 #lottery{
-    width:666px;
-    height:666px;
+    width:668px;
+    height:668px;
     padding: 8px;
     border-radius: 12px;
-    background:#bac2f6;
+    /* background:#bac2f6; */
+    border: 1px solid #bac2f6;
 }
 #lottery li{
     float:left; width:120px; height:120px; margin:5px; display:inline;
 }
 .li_div_bg {
-    background-color: #ae8686
+    border: 1px solid #ae8686;
+    /* background-color: #ae8686 */
 }
 .li_div_bg2 {
-    background-color: rgb(93, 141, 77);
+    border: 1px solid rgb(93, 141, 77);
+    /* background-color: rgb(93, 141, 77); */
 }
 .li_div_current_bg {
     background-color: #e12c2c;
 }
 .li_div_lucky {
     z-index: 99;
-    background-color: #ae8686;
+    border: 1px solid #ae8686;
+    /* background-color: #ae8686; */
 }
 @-webkit-keyframes li_div_lucky {
     0% {
