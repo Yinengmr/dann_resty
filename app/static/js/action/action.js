@@ -219,10 +219,16 @@ window.onload = function(){
                         
                         spawnSeed();
                         S.init('恭喜：'+root.emp_name+' 中签');
-                        for(let i=0;i<10;i++){
+                        for(let i=0;i<15;i++){
                             setTimeout(function(){
                                 spawnSeed();
-                            },800*i)
+                                setTimeout(function(){
+                                    spawnSeed();
+                                },70)
+                                setTimeout(function(){
+                                    spawnSeed();
+                                },100)
+                            },700*i)
                         }
                         let i = root.index;
                         root.class_true=true;
