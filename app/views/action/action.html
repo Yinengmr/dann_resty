@@ -31,9 +31,9 @@
 </div>
 <div style="float:left;width:654px;height:654px;margin-left:40px;">
     <div style="width:530px;margin:0px auto;">
-        <el-button @click="audio05.play();get_emp_all();" :loading="geting" :disabled="flag" round plain>{{geting?'刷新中':'刷新'}}</el-button>
+        <el-button style="background: #00000000;color:rgb(150, 198, 247);" @click="audio05.play();get_emp_all();" :loading="geting" :disabled="flag" round plain>{{geting?'刷新中':'刷新'}}</el-button>
         
-        <el-button style="float: right" @click="start_lottery()" :disabled="geting" :loading="flag" round plain>{{flag?'抽奖中':'抽奖'}}</el-button>
+        <el-button style="float: right;background: #00000000;color: rgb(150, 198, 247);" @click="start_lottery()" :disabled="geting" :loading="flag" round plain>{{flag?'抽奖中':'抽奖'}}</el-button>
         <el-radio-group v-model="radio_model" @change="his_raido_change1" style="float: right;padding: 15px;">
             <el-tooltip class="item" effect="dark" content="最近中签的4人，不会被抽中" placement="top">
                 <el-radio :label="1">专题演讲</el-radio>
