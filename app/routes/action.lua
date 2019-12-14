@@ -16,6 +16,9 @@ _M:get("", function(req, res, next)
      res:render('action/action')
 end)
 
+_M:get("/gift",function(req,res,next)
+    res:render('action/gift')
+end)
 -- 获取参与抽签人员
 _M:get('/emp',function(req, res, next)
     local new_arr = {}
@@ -35,6 +38,7 @@ _M:get('/emp',function(req, res, next)
     req.session.set("all_user",new_arr)
     return res:json{
         data = new_arr,
+        count = #new_arr,
         rv = 200
     }
 end)
@@ -205,6 +209,7 @@ _M:get('/emp_',function(req,res,next)
         
     return res:json{
         data = new_arr,
+        count = #new_arr,
         rv = 200
     }
 end)

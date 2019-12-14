@@ -36,15 +36,15 @@ window.onload = function(){
                     chouqian_his:[],
 
                     // 抽签类型
-                    radio_model:1,
+                    radio_model:2 ,
 
                     // 是否刷新中
                     geting:false,
 
                     // 是否显示礼品抽奖
-                    is_lipin:false,
+                    is_lipin:true,
                     // 历史记录类型
-                    his_raido:1,
+                    his_raido:2,
                     his_chouqian:[],
                 }
             },
@@ -104,7 +104,7 @@ window.onload = function(){
                             root.get_ajax(url,function(res){
                                 console.log(res)
                                 root.emp_all = res.data.data
-                                if(root.chouqian_his.length>=25){
+                                if(root.chouqian_his.length>=root.emp_all.length){
                                     clearTimeout(root.lottery);
                                     
                                     root.class_true=true;
@@ -113,7 +113,7 @@ window.onload = function(){
                                         $('#lottery li').css('opacity',1);
                                         root.class_true=false;
                                         root.message = '所有人都已中奖！祝贺活动圆满成功！'
-                                    },1200);
+                                    },2200);
                                     root.flag = false;
                                 }
                             })
@@ -153,7 +153,7 @@ window.onload = function(){
                         //return false;
                         return false;
                     }
-                    if(root.radio_model == 2 && root.chouqian_his.length>=25){
+                    if(root.radio_model == 2 && root.chouqian_his.length>=root.emp_all.length){
                         alert('所有人都已中奖！祝贺活动圆满成功！');
                         return false;
                     }
@@ -218,8 +218,8 @@ window.onload = function(){
                         clearTimeout(root.lottery);
                         
                         spawnSeed();
-                        S.init('恭喜：'+root.emp_name+' 中签');
-                        for(let i=0;i<12;i++){
+                        // S.init('恭喜：'+root.emp_name+' 中签');
+                        for(let i=0;i<6;i++){
                             setTimeout(function(){
                                 setTimeout(function(){
                                     spawnSeed();
@@ -232,7 +232,7 @@ window.onload = function(){
                                 },200)
                                 setTimeout(function(){
                                     spawnSeed();
-                                },400)
+                                },600)
                             },700*i)
                         }
                         let i = root.index;
