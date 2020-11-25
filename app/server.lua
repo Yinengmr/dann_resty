@@ -39,7 +39,10 @@ app:erroruse(function(err, req, res, next)
                 msg = "500! unknown error."
             })
         else
-            res:status(500):send("unknown error")
+            res:status(500):json({
+                rv = 500,
+                msg = "server unknown error"
+            })
         end
     end
 end)

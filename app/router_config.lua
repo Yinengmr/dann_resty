@@ -7,5 +7,12 @@ return {
     action = {
         { uri = "/action",    router = "app.routes.action"},  
         { uri = "/nike",    router = "app.routes.nike"},  
+    },
+    login = {
+        { uri = "/login", router = "app.routes.login"},
+        -- { uri = "/logout", router = "app.routes.logout"},
+    },
+    users = {
+        { uri = "/users", router = "app.routes.users"},
     }
 }

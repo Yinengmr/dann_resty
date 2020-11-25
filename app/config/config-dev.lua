@@ -49,7 +49,9 @@ return {
 	},
 	-- app訪問超級token
 	app_root_token = "2b5c2d36fc41358c299f9230d8a15e501b45f1b473c0cbacb54afa7bdc03e800",
-
+	-- 用於存儲密碼的鹽，請一定要修改此值, 一旦使用不能修改，用戶也可自行實現其他密碼方案
+	pwd_secret = "salt_secret_for_password",
+	
   	-- 是否可以跨域
 	allow_cross_domain = true,
 
