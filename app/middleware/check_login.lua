@@ -80,7 +80,6 @@ local function check_login(whitelist)
 				
 				return res:json{
 					rv = 401,
-					jwt_obj = jwt_obj,
 					msg = "不是有效的token"
 				}
 			else
