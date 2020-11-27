@@ -25,8 +25,12 @@ _M:post("/create", function(req, res, next)
         }
     end
 
-    local result, error = users_model:findUserName({
-        username = username
+    -- local result, error = users_model:findUserName({
+    --     username = username
+    -- })
+    local result, error = users_model:findCustom({
+        type = "username",
+        value = username
     })
     if #result > 0 then
         return res:json{

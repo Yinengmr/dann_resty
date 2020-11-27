@@ -39,6 +39,7 @@ _M:get("/jwt", function(req, res, next)
                          iat (Issued At)：签发时间
                          jti (JWT ID)：编号
                      ]]
+                    exp=1606373752,
                     foo="bar",
                     name="danny"
                }
@@ -46,7 +47,7 @@ _M:get("/jwt", function(req, res, next)
      )
      -- local jwt_obj = jwt:load_jwt(jwt_token)
      -- ngx_log(ngx.ERR, "jwt-err", jwt_obj)
-     return ngx.say('<span>'..jwt_token..'</span></br>')
+     return ngx.say(jwt_token)
      -- res:render('home')
 end)
 

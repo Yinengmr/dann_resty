@@ -7,6 +7,7 @@ local whitelist = {
 
     -- "^/app/v1/auth/token_refresh$",
     -- "^/app/v1/auth/refresh_token$",
-    "^/jwt"
+    "^/jwt",
+    "^/login$",
 }
 return whitelist

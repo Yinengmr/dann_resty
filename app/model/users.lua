@@ -3,38 +3,16 @@ local db = DB:new()
 
 local users = {}
 
--- 查询用户名
-function users:findUserName(sqlparams)
+-- 查询用户名 | 邮箱 | 电话 三合一
+function users:findCustom(sqlparams)
     local sql = [[
         SELECT `id`, `username`, `email`, `phone`
         FROM hw_user
-        WHERE `username`= :username
+        WHERE `]]..sqlparams['type'] ..[[` =  :value
     ]]
 	local res,err = db:query(sql, sqlparams)
     return res,err
 end
--- 查询邮箱
-function users:findEmail(sqlparams)
-    local sql = [[
-        SELECT `id`, `username`, `email`, `phone`
-        FROM hw_user
-        WHERE `email`= :email
-    ]]
-	local res,err = db:query(sql, sqlparams)
-    return res,err
-end
-
--- 查询电话
-function users:findPhone(sqlparams)
-    local sql = [[
-        SELECT `id`, `username`, `email`, `phone`
-        FROM hw_user
-        WHERE `phone`= :phone
-    ]]
-	local res,err = db:query(sql, sqlparams)
-    return res,err
-end
-
 -- 创建用户
 function users:add(sqlparams)
     local sql = [[
@@ -46,23 +24,12 @@ function users:add(sqlparams)
     return res,err
 end
 
--- 修改用户名字
-function users:updateName(sqlparams)
-    local sql = [[
-        UPDATE hw_user 
-        SET 
-            `username`=:username
-        WHERE id= :id
-    ]]
-	local res,err = db:query(sql, sqlparams)
-    return res,err
-end
--- 修改用户信息
+-- 修改用户信息 username | email | phone
 function users:updateBase(sqlparams)
     local sql = [[
         UPDATE hw_user 
         SET 
-            `phone`=:phone, `email`=:email
+            `]]..sqlparams['type'] ..[[` =  :value
         WHERE id= :id
     ]]
 	local res,err = db:query(sql, sqlparams)

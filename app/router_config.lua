@@ -10,7 +10,7 @@ return {
     },
     login = {
         { uri = "/login", router = "app.routes.login"},
-        -- { uri = "/logout", router = "app.routes.logout"},
+        { uri = "/logout", router = "app.routes.logout"},
     },
     users = {
         { uri = "/users", router = "app.routes.users"},
